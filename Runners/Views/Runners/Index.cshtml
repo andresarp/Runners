@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Runners.Models.Runner>
+
+@{
+    ViewData["Title"] = "Index";
+    int total = 0;
+    int data = 0;
+}
+@foreach (var item in Model){
+    data++;
+}
+
+
+<h1 class="mb-5 mt-5">Lista de corredores</h1>
+
+<p>
+    @foreach (var item in Model)
+    {
+        total = total + 1;
+    }
+    @if (total < 10)
+    {
+        <a class="btn btn-primary" asp-action="Create">Ingresar corredor</a>
+    }
+
+</p>
+@if (data > 0)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Nombre</th>
+            <th>Minutos</th>
+            <th>Segundos</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Minutes)
+                </td>
+                <td>              @Html.DisplayFor(modelItem => item.Seconds)
+                </td>
+                        <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            }
+    </tbody>
+</table>
+}

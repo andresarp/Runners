@@ -1,0 +1,53 @@
+﻿@model Runners.Models.Runner
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar corredor</h1>
+
+<h5>¿Seguro que deseas eliminar este corredor?</h5>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Número
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+        <dt class = "col-sm-2">
+           Nombre
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Minutos
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Minutes)
+        </dd>
+        <dt class = "col-sm-2">
+            Segundos
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Seconds)
+        </dd>
+    </dl>
+    
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <div class="row">
+            <div class="col-12 col-md-3 col-xl-2 order-md-2">
+                <div class="form-group">
+                    <input type="submit" value="Eliminar corredor" class="btn btn-danger btn-block" />
+                </div>
+            </div>
+            <div class="col-12 col-md-3 col-xl-2 d-flex align-items-center order-md-1">
+                <a asp-action="Index" class="btn btn-secondary btn-block">Regresar</a>
+            </div>
+        </div>
+    </form>
+</div>

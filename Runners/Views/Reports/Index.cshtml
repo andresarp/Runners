@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Runners.Models.Runner>
+
+@{
+    ViewData["Title"] = "Index";
+    int data = 0;
+}
+@foreach (var item in Model){
+    data++;
+}
+
+@if (data>0){
+<h1>Reporte de velocidad</h1>
+
+<p>+++++++++++++++++++++++++++++++++++++++++++++++</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Corredor
+            </th>
+            <th>
+              Tiempo(minutos, segundos)
+            </th>
+            <th>
+               m/s
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            double velocidad = Math.Round(2000 / ((item.Minutes * 60) + item.Seconds), 2);
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Minutes):@Html.DisplayFor(modelItem => item.Seconds)
+                </td>
+                <td>
+                    @velocidad
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+              Mejor velocidad
+            </th>
+            <th>
+                Peor velocidad
+            </th>
+            <th>
+                Velocidad promedio
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            double lessRapid = 0;
+            double mostRapid = 0;
+            double average = 0;
+            List<double> runners = new List<double>();
+                @foreach (var item in Model)
+        {
+            double velocidad = Math.Round(2000 / ((item.Minutes * 60) + item.Seconds), 2);
+            runners.Add(velocidad);
+            average += velocidad;
+            }
+            runners.Sort();
+            lessRapid = runners.LastOrDefault();
+            mostRapid = runners.FirstOrDefault();
+            average = Math.Round(average / runners.Count);
+        }
+
+        <tr>
+                <td>
+                @lessRapid m/s
+                </td>
+                <td>
+                @mostRapid m/s
+                </td>
+                <td>
+                @average m/s
+                </td>
+            </tr>
+     
+    </tbody>
+</table>
+}else{
+    <div class="col-12 mb-3">
+
+        <div class="toast align-items-center text-white bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Debe de ingresar primeramente un corredor para poder ver los reportes
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mb-3">
+
+        <a class="btn btn-primary btn-block" asp-area="" asp-controller="Runners" asp-action="index">Ir a registrar un corredor</a>
+
+    </div>
+}
